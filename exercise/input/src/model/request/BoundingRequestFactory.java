@@ -21,7 +21,8 @@ public class BoundingRequestFactory {
     public static Request<Character> makeCharacterBoundRequest(String prompt, String message, char lowerBound, char upperBound){
 
         Function<String, Character> sanitizer = (rawInput) -> {
-            return rawInput.toCharArray()[0];
+
+            return rawInput.length() == 1 ? rawInput.toCharArray()[0] : null;
         };
 
         Predicate<Character> requirement = (input) -> {

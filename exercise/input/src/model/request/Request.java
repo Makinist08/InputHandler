@@ -44,7 +44,7 @@ public class Request<T> {
                 input = sanitizer.apply(rawInput);
                 notSuccessfulTest = !this.requirement.test(input);
             } catch (Exception e) {
-                System.out.println(errorMessage);
+                //System.out.println(errorMessage);
             }
 
             if(notSuccessfulTest){

@@ -31,9 +31,9 @@ public class InputHandler {
         return input;
     }
 
-    public char requestBoundedChar(int lowerBound, int upperBound){
+    public char requestBoundedChar(char first, char last){
         Request<Character> request = BoundingRequestFactory.makeCharacterBoundRequest(
-            "I want a lowercase alphabetic letter", "Give me a lowercase alphabetic letter", 'a', 'z');
+            "I want a lowercase alphabetic letter", "Give me a lowercase alphabetic letter", first, last);
         char input = request.makeRequest(inputReader);
         return input;
     }
