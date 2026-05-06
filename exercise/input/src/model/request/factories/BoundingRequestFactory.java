@@ -1,7 +1,9 @@
-package model.request;
+package model.request.factories;
 
 import java.util.function.Function;
-import java.util.function.Predicate;
+
+import model.request.BoundingRequest;
+import model.request.Request;
 
 public class BoundingRequestFactory {
 
@@ -11,11 +13,8 @@ public class BoundingRequestFactory {
             return Integer.valueOf(rawInput);
         };
 
-        Predicate<Integer> requirement = (input) -> {
-            return (input.intValue() >= lowerBound && input.intValue() <= upperBound);
-        };
         
-        return new Request<Integer>(prompt, message, sanitizer, requirement);
+        return new BoundingRequest<Integer>(prompt, message, sanitizer, lowerBound, upperBound);
     }
 
     public static Request<Character> makeCharacterBoundRequest(String prompt, String message, char lowerBound, char upperBound){
@@ -24,11 +23,7 @@ public class BoundingRequestFactory {
 
             return rawInput.length() == 1 ? rawInput.toCharArray()[0] : null;
         };
-
-        Predicate<Character> requirement = (input) -> {
-            return (input.compareTo(Character.valueOf(lowerBound)) >= 0 && input.compareTo(Character.valueOf(upperBound)) <= 0);
-        };
         
-        return new Request<Character>(prompt, message, sanitizer, requirement);
+        return new BoundingRequest<Character>(prompt, message, sanitizer, lowerBound, upperBound);
     }
 }

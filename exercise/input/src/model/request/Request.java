@@ -14,7 +14,7 @@ public class Request<T> {
      * 1. Prompt User -> All Requests
      * 2. Read Input -> All Requests
      * 3. Try to sanitize prompt -> Specific to Request Type
-     * 4. Try to Test prompt -> Specific to Request Necessity
+     * 4. Try to Test prompt -> Specific to Request Requirements
      * 5. On Error: Fail Test -> All Requests
      * 6. On Test Fail: ErrorPrompt and do step 2 -> All Requests
      * 7. Return Input
@@ -41,8 +41,8 @@ public class Request<T> {
         do {
             try {
                 rawInput = scanner.nextLine();
-                input = sanitizer.apply(rawInput);
-                notSuccessfulTest = !this.requirement.test(input);
+                input = this.sanitize(rawInput);
+                notSuccessfulTest = !this.testRequirement(input);
             } catch (Exception e) {
                 //System.out.println(errorMessage);
             }
@@ -53,5 +53,13 @@ public class Request<T> {
         } while (notSuccessfulTest);
 
         return input;
+    }
+
+    public T sanitize(String rawInput){
+        return this.sanitizer.apply(rawInput);
+    }
+
+    public boolean testRequirement(T input){
+        return this.requirement.test(input);
     }
 }

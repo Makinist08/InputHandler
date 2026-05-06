@@ -11,7 +11,11 @@ public class App {
         char c = inputHandler.requestBoundedChar('a', 'z');
         System.out.println(c + " is the " + ordinal(Character.getNumericValue(c) - 9) + " letter in the alphabet");
 
+        String[] options = {"Apple","Orange","Banana"};
+        System.out.println("Enjoy your " + inputHandler.requestPickStringFromArray(options));
+
     }
+
 
     // Source - https://stackoverflow.com/a/6810409
     // Posted by Bohemian, modified by community. See post 'Timeline' for change history
