@@ -1,6 +1,5 @@
 package model.request;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -16,23 +15,25 @@ public class PickFromArrayRequest<T> extends Request<T>{
      * 6. On Test Fail: ErrorPrompt and do step 2 -> All Requests
      * 7. Return ArrayObject
      */
-    public PickFromArrayRequest(String prompt, String errorMessage, Function<String,T> sanitizer, T[] array){
-        super(prompt, errorMessage, sanitizer, null);
+    public PickFromArrayRequest(String prompt, String errorMessage, String exitCode, Function<String,T> sanitizer, T[] array){
+        super(prompt, errorMessage, exitCode, sanitizer, null);
         this.array = array;
     }
 
     @Override
     public boolean testRequirement(T t){
-        boolean noMatches = true;
+        boolean isMatch = false;
         int i = 0;
 
-        while (noMatches && i < array.length) {
-            noMatches = t.equals(array[i]);
+        while (!isMatch && i < array.length) {
+            isMatch = false;
+            isMatch = t.equals(array[i]);
             i++;
         }
-        System.out.println("Input: " + t + "\n Array: " + (List.of(array)).toString() + "\n Tests: " + i + "\n foundMatch: " + noMatches);
 
-        return noMatches;
+        System.out.println("Input: " + t + "\n Array: " + (List.of(array)).toString() + "\n Tests: " + (i+1) + "\n foundMatch: " + isMatch);
+
+        return isMatch;
     }
 
 }

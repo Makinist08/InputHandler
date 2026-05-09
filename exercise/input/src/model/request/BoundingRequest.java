@@ -6,8 +6,8 @@ public class BoundingRequest<T extends Comparable<T>> extends Request<T> {
     private T lowerBound;
     private T upperBound;
     
-    public BoundingRequest(String prompt, String errorMessage, Function<String,T> sanitizer, T lowerBound, T upperBound){
-        super(prompt, errorMessage, sanitizer, null);
+    public BoundingRequest(String prompt, String errorMessage, String exitCode, Function<String,T> sanitizer, T lowerBound, T upperBound){
+        super(prompt, errorMessage, exitCode, sanitizer, null);
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
     }

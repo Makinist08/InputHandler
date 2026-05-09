@@ -6,12 +6,12 @@ import model.request.PickFromArrayRequest;
 import model.request.Request;
 
 public class ArrayRequestFactory {
-    public static Request<String> makePickStringFromArrayRequest(String prompt, String errorMessage, String[] array){
+    public static Request<String> makePickStringFromArrayRequest(String prompt, String errorMessage, String exitCode,  String[] array){
 
         Function<String, String> sanitizer = (rawInput) -> {
             return rawInput;
         };
         
-        return new PickFromArrayRequest<String>(prompt, errorMessage, sanitizer, array);
+        return new PickFromArrayRequest<String>(prompt, errorMessage, exitCode, sanitizer, array);
     }
 }

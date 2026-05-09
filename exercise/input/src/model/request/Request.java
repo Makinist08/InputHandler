@@ -1,4 +1,5 @@
 package model.request;
+
 import java.util.Scanner;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -7,6 +8,7 @@ import java.util.function.Predicate;
 public class Request<T> {
     private String prompt;
     private String errorMessage;
+    private String exitCode;
     private Predicate<T> requirement;
     private Function<String, T> sanitizer;
 
@@ -19,9 +21,10 @@ public class Request<T> {
      * 6. On Test Fail: ErrorPrompt and do step 2 -> All Requests
      * 7. Return Input
      */
-    public Request(String prompt, String errorMessage, Function<String, T> sanitizer, Predicate<T> requirement){
+    public Request(String prompt, String errorMessage, String exitCode, Function<String, T> sanitizer, Predicate<T> requirement){
         this.prompt = prompt;
         this.errorMessage = errorMessage;
+        this.exitCode = exitCode;
         this.requirement = requirement;
         this.sanitizer = sanitizer;
     }
@@ -41,8 +44,12 @@ public class Request<T> {
         do {
             try {
                 rawInput = scanner.nextLine();
-                input = this.sanitize(rawInput);
-                notSuccessfulTest = !this.testRequirement(input);
+                if (rawInput != exitCode) {
+                    input = this.sanitize(rawInput);
+                    notSuccessfulTest = !this.testRequirement(input);
+                } else {
+                    notSuccessfulTest = true;
+                }
             } catch (Exception e) {
                 //System.out.println(errorMessage);
             }
