@@ -17,6 +17,16 @@ public class BoundingRequestFactory {
         return new BoundingRequest<Integer>(prompt, message, exitCode, sanitizer, lowerBound, upperBound);
     }
 
+    public static Request<Double> makeDoubleBoundRequest(String prompt, String message, String exitCode, double lowerBound, double upperBound){
+
+        Function<String, Double> sanitizer = (rawInput) -> {
+            return Double.valueOf(rawInput);
+        };
+
+        
+        return new BoundingRequest<Double>(prompt, message, exitCode, sanitizer, lowerBound, upperBound);
+    }
+
     public static Request<Character> makeCharacterBoundRequest(String prompt, String message, String exitCode, char lowerBound, char upperBound){
 
         Function<String, Character> sanitizer = (rawInput) -> {

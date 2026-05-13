@@ -2,14 +2,12 @@ package model.request;
 
 import java.util.Scanner;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 
-public class Request<T> {
+public abstract class Request<T> {
     private String prompt;
     private String errorMessage;
     private String exitCode;
-    private Predicate<T> requirement;
     private Function<String, T> sanitizer;
 
     /**
@@ -21,12 +19,15 @@ public class Request<T> {
      * 6. On Test Fail: ErrorPrompt and do step 2 -> All Requests
      * 7. Return Input
      */
-    public Request(String prompt, String errorMessage, String exitCode, Function<String, T> sanitizer, Predicate<T> requirement){
+    public Request(String prompt, String errorMessage, String exitCode, Function<String, T> sanitizer){
         this.prompt = prompt;
         this.errorMessage = errorMessage;
         this.exitCode = exitCode;
-        this.requirement = requirement;
         this.sanitizer = sanitizer;
+    }
+
+    public Request(String prompt, String errorMessage, Function<String, T> sanitizer){
+        this(prompt, errorMessage, null, sanitizer);
     }
 
     /**
@@ -34,7 +35,7 @@ public class Request<T> {
      * @param scanner
      * @return
      */
-    public T makeRequest(Scanner scanner){
+    public final T makeRequest(Scanner scanner){
         boolean notSuccessfulTest = true;
         String rawInput;
         T input = null;
@@ -44,11 +45,11 @@ public class Request<T> {
         do {
             try {
                 rawInput = scanner.nextLine();
-                if (rawInput != exitCode) {
+                if (!rawInput.equals(exitCode)) {
                     input = this.sanitize(rawInput);
                     notSuccessfulTest = !this.testRequirement(input);
                 } else {
-                    notSuccessfulTest = true;
+                    notSuccessfulTest = false;
                 }
             } catch (Exception e) {
                 //System.out.println(errorMessage);
@@ -66,7 +67,8 @@ public class Request<T> {
         return this.sanitizer.apply(rawInput);
     }
 
+
     public boolean testRequirement(T input){
-        return this.requirement.test(input);
+        return input != null;
     }
 }

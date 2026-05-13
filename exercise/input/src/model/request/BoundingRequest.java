@@ -7,7 +7,7 @@ public class BoundingRequest<T extends Comparable<T>> extends Request<T> {
     private T upperBound;
     
     public BoundingRequest(String prompt, String errorMessage, String exitCode, Function<String,T> sanitizer, T lowerBound, T upperBound){
-        super(prompt, errorMessage, exitCode, sanitizer, null);
+        super(prompt, errorMessage, exitCode, sanitizer);
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
     }

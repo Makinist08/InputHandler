@@ -16,7 +16,7 @@ public class PickFromArrayRequest<T> extends Request<T>{
      * 7. Return ArrayObject
      */
     public PickFromArrayRequest(String prompt, String errorMessage, String exitCode, Function<String,T> sanitizer, T[] array){
-        super(prompt, errorMessage, exitCode, sanitizer, null);
+        super(prompt, errorMessage, exitCode, sanitizer);
         this.array = array;
     }
 

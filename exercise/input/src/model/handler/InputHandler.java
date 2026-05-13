@@ -9,7 +9,7 @@ import model.request.factories.BoundingRequestFactory;
 public class InputHandler {
     
     private static InputHandler instance;
-    private static String EXIT_CODE = "GET OUT OF HERE";
+    private static String EXIT_CODE = "Exit";
     private Scanner inputReader;
 
     private InputHandler(){
@@ -23,20 +23,27 @@ public class InputHandler {
         return instance;
     }
 
-    public int requestBoundedInt(int lowerBound, int upperBound){
+    public Integer requestBoundedInt(int lowerBound, int upperBound){
         Request<Integer> request = BoundingRequestFactory.makeIntegerBoundRequest(
             "I want a simple integer within 0 to 100", 
             "Give me an integer withing 0 to 100", EXIT_CODE,
             lowerBound,
             upperBound);
-        int input = request.makeRequest(inputReader);
+        Integer input = request.makeRequest(inputReader);
         return input;
     }
 
-    public char requestBoundedChar(char first, char last){
+    public Character requestBoundedChar(char first, char last){
         Request<Character> request = BoundingRequestFactory.makeCharacterBoundRequest(
             "I want a lowercase alphabetic letter", "Give me a lowercase alphabetic letter", EXIT_CODE, first, last);
-        char input = request.makeRequest(inputReader);
+        Character input = request.makeRequest(inputReader);
+        return input;
+    }
+
+    public Double requestBoundedDouble(double first, double last){
+        Request<Double> request = BoundingRequestFactory.makeDoubleBoundRequest(
+            "I want a get", "Give me a lowercase alphabetic letter", EXIT_CODE, first, last);
+        Double input = request.makeRequest(inputReader);
         return input;
     }
 
